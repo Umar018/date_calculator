@@ -3,24 +3,32 @@ const button = document.querySelector("#button");
 const resultDiv = document.querySelector("#result");
 
 button.addEventListener("click", function () {
+  
   if (!date.value) {
-    resultDiv.textContent =
-      "Shunaqayam odam erinchoq boladimi! Taxmin qilaymi?";
+    resultDiv.textContent = "Taxmin qilaymi !?";
     return;
   }
 
+  const currDate = new Date();
   const sepDate = new Date(date.value);
-  const onlyYear = 2025 - sepDate.getFullYear();
+  const onlyYear = currDate.getFullYear() - sepDate.getFullYear();
 
   if (onlyYear < 0) {
-    resultDiv.textContent = "Kelajakda tugilganmisiz?";
+    resultDiv.textContent = "Kelajakda tugilganmisiz ?";
     return;
   }
 
-  const onlyMonth = sepDate.getMonth();
+  const onlyMonth = Math.abs(currDate.getMonth() - sepDate.getMonth());
   const returnIt = document.createElement("p");
-  returnIt.textContent +=
-    "You are " + onlyYear + " and " + onlyMonth + " months old";
-  resultDiv.innerHTML = "";
+
+  returnIt.textContent += "You are " + onlyYear + " year(s) ";
+
+  if (onlyMonth !== 0) {
+    returnIt.textContent += " and " + onlyMonth + " month(s) ";
+  }
+
+  returnIt.textContent += " old";
+
+  resultDiv.innerHTML = "";   
   resultDiv.appendChild(returnIt);
 });
